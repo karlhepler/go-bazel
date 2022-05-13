@@ -1,0 +1,3 @@
+#!/usr/bin/env sh
+
+exec "$REPO_ROOT/bin/bazel" run //:gazelle -- "$@"
