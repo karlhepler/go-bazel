@@ -1,0 +1,29 @@
+#!/usr/bin/env sh
+
+set -e
+[ "$DEBUG" = true ] && set -x
+
+release='v0.16.2'
+
+# validate supported operating systems
+case "$(uname -sm)" in
+    'Darwin x86_64') platform='darwin_amd64';;
+    'Darwin arm64') platform='darwin_arm64';;
+    'Linux x86_64') platform='linux_amd64';;
+    *) >&2 echo 'unsupported operating system'; exit 1;;
+esac
+
+# maybe download ibazel
+ibazel="ibazel-$platform-$release"
+if [ ! -f "$CACHE_BIN/$ibazel" ]; then
+    (
+        cd "$CACHE_BIN"
+        curl -Lo "$ibazel" "https://github.com/bazelbuild/bazel-watcher/releases/download/$release/ibazel_$platform"
+        chmod +x "$ibazel"
+    )
+fi
+
+exec "$CACHE_BIN/$ibazel" \
+    -bazel_path="$REPO_ROOT/bin/bazel" \
+    --run_output_interactive=false \
+    "$@"
