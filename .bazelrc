@@ -1,3 +1,4 @@
 test --test_output=errors
-build --disk_cache=~/.cache/go-bazel/bazel_disk_cache
-common --repository_cache=~/.cache/go-bazel/bazel_repository_cache
+build --symlink_prefix dist/
+
+try-import %workspace%/.bazelrc.local

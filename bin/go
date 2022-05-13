@@ -1,0 +1,18 @@
+#!/usr/bin/env sh
+
+set -e
+[ "$DEBUG" = true ] && set -x
+
+go=
+
+# maybe set go to contents of go.pth
+if [ -f "$CACHE_BIN/go.pth" ]; then
+    go="$(cat "$CACHE_BIN/go.pth")"
+fi
+
+# maybe create go.pth from bazel and set go
+if [ -z "$go" ] || [ ! -f "$go" ]; then
+    go="$("$REPO_ROOT/bin/bazel" --max_idle_secs=5 run --run_under 'echo' '@go_sdk//:bin/go' | tee "$CACHE_BIN/go.pth")"
+fi
+
+exec "$go" "$@"
