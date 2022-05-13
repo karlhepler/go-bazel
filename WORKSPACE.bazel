@@ -1,7 +1,5 @@
 workspace(name = "go-bazel")
 
-# rules_go + bazel_gazelle -----------------------------------------------------
-
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 
 http_archive(
@@ -42,4 +40,4 @@ go_rules_dependencies()
 
 go_register_toolchains(version = "1.18")
 
-gazelle_dependencies(go_repository_default_config = "@//:WORKSPACE.bazel")
+gazelle_dependencies()

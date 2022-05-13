@@ -12,7 +12,7 @@ case "$(uname -sm)" in
     *) >&2 echo 'Unsupported Operating System'; exit 1;;
 esac
 
-# create cache directory if not exists
+# maybe create cache directory
 cache=~/.cache/go-bazel
 if [ ! -f "$cache/bin" ]; then
     mkdir -p "$cache/bin"

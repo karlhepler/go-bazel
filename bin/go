@@ -1,0 +1,25 @@
+#!/usr/bin/env sh
+
+set -e
+[ "$DEBUG" = true ] && set -x
+
+# maybe create cache directory
+cache=~/.cache/go-bazel
+if [ ! -f "$cache/bin" ]; then
+    mkdir -p "$cache/bin"
+fi
+
+go=
+
+# maybe set go to contents of go.pth
+if [ -f "$cache/bin/go.pth" ]; then
+    go="$(cat "$cache/bin/go.pth")"
+fi
+
+# maybe create go.pth from bazel and set go
+if [ -z "$go" ] || [ ! -f "$go" ]; then
+    dir="$(CDPATH='' cd -- "$(dirname -- "$0")" && pwd -P)"
+    go="$("$dir/bazel" --max_idle_secs=5 run --run_under 'echo' '@go_sdk//:bin/go' | tee "$cache/bin/go.pth")"
+fi
+
+exec "$go" "$@"
