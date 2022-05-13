@@ -1,0 +1,35 @@
+#!/usr/bin/env sh
+
+set -e
+
+release='v1.11.0'
+
+# validate supported operating systems
+case "$(uname -sm)" in
+    'Darwin x86_64') platform='darwin-amd64';;
+    'Darwin arm64') platform='darwin-arm64';;
+    'Linux x86_64') platform='linux-amd64';;
+    *) >&2 echo 'Unsupported Operating System'; exit 1;;
+esac
+
+# create cache directory if not exists
+cache=~/.cache/go-bazel
+if [ ! -f "$cache/bin" ]; then
+    mkdir -p "$cache/bin"
+fi
+
+# download bazelisk if not exists
+bazelisk="bazelisk-$platform-$release"
+if [ ! -f "$cache/bin/$bazelisk" ]; then
+    (
+        cd "$cache/bin"
+        curl -Lo "$bazelisk" "https://github.com/bazelbuild/bazelisk/releases/download/$release/bazelisk-$platform"
+        chmod +x "$bazelisk"
+    )
+fi
+
+# set bazelisk cache location
+export BAZELISK_HOME="$cache/bazelisk"
+
+# call bazelisk with custom bazel cache location
+exec "$cache/bin/$bazelisk" --output_user_root="$cache/bazel" "$@"
