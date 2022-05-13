@@ -30,13 +30,6 @@ go_repository(
     version = "v0.0.0-20200804184101-5ec99f83aff1",
 )
 
-go_repository(
-    name = "com_github_spf13_cobra",
-    importpath = "github.com/spf13/cobra",
-    sum = "h1:y+wJpx64xcgO1V+RcnwW0LEHxTKRi2ZDPSBjWnrg88Q=",
-    version = "v1.4.0",
-)
-
 go_rules_dependencies()
 
 go_register_toolchains(version = "1.18")
