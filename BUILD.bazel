@@ -1,4 +1,19 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
 
 # gazelle:prefix github.com/karlhepler/go-bazel
+# gazelle:exclude dist/**
 gazelle(name = "gazelle")
+
+gazelle(
+    name = "gazelle-update-repos",
+    args = [
+        "-from_file=go.mod",
+        "-prune",
+    ],
+    command = "update-repos",
+)
+
+alias(
+    name = "go",
+    actual = "@go_sdk//:bin/go",
+)

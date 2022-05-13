@@ -5,6 +5,7 @@ go_library(
     srcs = ["main.go"],
     importpath = "github.com/karlhepler/go-bazel/hello",
     visibility = ["//visibility:private"],
+    deps = ["@com_github_joho_godotenv//:godotenv"],
 )
 
 go_binary(

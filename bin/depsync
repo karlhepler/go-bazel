@@ -1,0 +1,12 @@
+#!/usr/bin/env sh
+
+set -e
+[ "$DEBUG" = true ] && set -x
+dir="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
+
+if [ $# -gt 0 ]; then
+    "$dir/go" get "$@"
+fi
+# "$dir/go" mod tidy # TODO(karlhepler): figure out how to run this, but keep xerrors
+"$dir/bazel" run //:gazelle-update-repos
+"$dir/bazel" run //:gazelle

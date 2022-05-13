@@ -24,3 +24,7 @@ INFO: 34 processes: 14 internal, 20 darwin-sandbox.
 FAILED: Build did NOT complete successfully
 FAILED: Build did NOT complete successfully
 ```
+
+---
+
+https://github.com/bazelbuild/rules_go/wiki/Editor-setup
