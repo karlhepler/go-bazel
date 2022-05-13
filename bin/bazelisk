@@ -1,6 +1,7 @@
 #!/usr/bin/env sh
 
 set -e
+[ "$DEBUG" = true ] && set -x
 
 release='v1.11.0'
 
