@@ -14,13 +14,14 @@ case "$(uname -sm)" in
 esac
 
 # maybe download buildifier
+cache=~/.cache/go-bazel/bin
 buildifier="buildifier-$platform-$release"
-if [ ! -f "$CACHE_BIN/$buildifier" ]; then
+if [ ! -f "$cache/$buildifier" ]; then
     (
-        cd "$CACHE_BIN"
+        cd "$cache"
         curl -Lo "$buildifier" "https://github.com/bazelbuild/buildtools/releases/download/$release/buildifier-$platform"
         chmod +x "$buildifier"
     )
 fi
 
-exec "$CACHE_BIN/$buildifier" "$@"
+exec "$cache/$buildifier" "$@"

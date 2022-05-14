@@ -1,14 +1,14 @@
 load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library")
 
 go_library(
-    name = "hello_lib",
+    name = "depsync_lib",
     srcs = ["main.go"],
-    importpath = "github.com/karlhepler/go-bazel/hello",
+    importpath = "github.com/karlhepler/go-bazel/depsync",
     visibility = ["//visibility:private"],
 )
 
 go_binary(
-    name = "hello",
-    embed = [":hello_lib"],
+    name = "depsync",
+    embed = [":depsync_lib"],
     visibility = ["//visibility:public"],
 )

@@ -14,16 +14,18 @@ case "$(uname -sm)" in
 esac
 
 # maybe download ibazel
+cache=~/.cache/go-bazel/bin
 ibazel="ibazel-$platform-$release"
-if [ ! -f "$CACHE_BIN/$ibazel" ]; then
+if [ ! -f "$cache/$ibazel" ]; then
     (
-        cd "$CACHE_BIN"
+        cd "$cache"
         curl -Lo "$ibazel" "https://github.com/bazelbuild/bazel-watcher/releases/download/$release/ibazel_$platform"
         chmod +x "$ibazel"
     )
 fi
 
-exec "$CACHE_BIN/$ibazel" \
-    -bazel_path="$REPO_ROOT/bin/bazel" \
+dir="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
+exec "$cache/$ibazel" \
+    -bazel_path="$dir/bazel" \
     --run_output_interactive=false \
     "$@"

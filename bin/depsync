@@ -7,6 +7,6 @@ dir="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
 if [ $# -gt 0 ]; then
     "$dir/go" get "$@"
 fi
-# "$dir/go" mod tidy # TODO(karlhepler): figure out how to run this, but keep xerrors
+"$dir/go" mod tidy
 "$dir/bazel" run //:gazelle-update-repos
 "$dir/bazel" run //:gazelle
