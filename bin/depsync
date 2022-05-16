@@ -5,7 +5,7 @@ set -e
 dir="$(CDPATH= cd -- "$(dirname -- "$0")" && pwd -P)"
 
 if [ $# -gt 0 ]; then
-    "$dir/go" get "$@"
+    "$dir/go" get -u "$@"
 fi
 "$dir/go" mod tidy
 "$dir/bazel" run //:gazelle-update-repos
